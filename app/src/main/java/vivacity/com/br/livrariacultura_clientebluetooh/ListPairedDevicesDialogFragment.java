@@ -20,8 +20,13 @@ import java.util.Arrays;
 
 public class ListPairedDevicesDialogFragment extends DialogFragment {
 
+    // Constante que armazena o nome na classe
     private static final String TAG = ListPairedDevicesDialogFragment.class.getSimpleName();
 
+    /**
+     * CharSequence array que armazena o array passado como argumento pelo método
+     * {@link #setArguments(Bundle)} da classe {@link Fragment}
+     */
     private CharSequence[] items;
 
 
@@ -36,7 +41,8 @@ public class ListPairedDevicesDialogFragment extends DialogFragment {
     ListPairedDevicesListener listener;
 
     /**
-     * Override the Fragment.onAttach() method to instantiate the NoticeDialogListener
+     * Override the {@link Fragment#onAttach(Activity)} method to instantiate the
+     * ListPairedDevicesListener
      */
     @Override
     public void onAttach(Activity activity) {
@@ -52,7 +58,7 @@ public class ListPairedDevicesDialogFragment extends DialogFragment {
 
             // The activity doesn't implement the interface, throw exception
             throw new ClassCastException(activity.toString()
-                    + " must implement ListPairedDevicesListener");
+                    + " deve implementar ListPairedDevicesListener");
         }
     }
 
@@ -74,6 +80,7 @@ public class ListPairedDevicesDialogFragment extends DialogFragment {
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
+        // Setup the AlertDialog
         builder.setTitle("Dispositivos pareados").setItems(this.items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

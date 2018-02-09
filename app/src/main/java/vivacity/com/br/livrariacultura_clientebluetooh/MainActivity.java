@@ -54,6 +54,11 @@ public class MainActivity extends AppCompatActivity implements ListPairedDevices
         setUpBluetooth();
     }
 
+    /**
+     * Evento disparado quando a ImageView do microfone é clicada.
+     *
+     * @param view - {@link android.widget.ImageView} do microfone.
+     */
     public void startListening(View view) {
         switch (view.getId()) {
             case R.id.imageViewMic:
@@ -62,6 +67,9 @@ public class MainActivity extends AppCompatActivity implements ListPairedDevices
         }
     }
 
+    /**
+     * Inicia a activity responsável pela conversão de fala em voz.
+     */
     private void showAndListen() {
 
         // See: https://developer.android.com/reference/android/speech/RecognizerIntent.html#ACTION_RECOGNIZE_SPEECH
@@ -199,6 +207,9 @@ public class MainActivity extends AppCompatActivity implements ListPairedDevices
         }
     }
 
+    /**
+     * Solicita ao usuário que habilite o Bluetooth
+     */
     private void enableBluetooth() {
 
         // Para solicitar a ativação do Bluetooth, chame startActivityForResult() com o
@@ -213,6 +224,8 @@ public class MainActivity extends AppCompatActivity implements ListPairedDevices
     /**
      * Antes de executar a descoberta de dispositivos, vale a pena consultar o conjunto de
      * dispositivos pareados para verificar se o dispositivo desejado já é conhecido.
+     *
+     * @return CharSequence array - Nomes dos dispositivos pareados.
      */
     private CharSequence[] queryPairedDevices() {
 
