@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Livraria Cultura - Cliente Bluetooh</string>
     <string name="uuid">5419a893-467c-4812-8cdb-282f5853168f</string>
+    <string name="image_view_mic_content_description">Aperte para começar a Conversão de Fala para
+        Texto.</string>
+    <string name="image_view_send_message_content_description">Aperte para selecionar o dispositivo
+        a qual deseja enviar a mensagem.</string>
     <string-array name="devices_name">
         <item></item>
     </string-array>
