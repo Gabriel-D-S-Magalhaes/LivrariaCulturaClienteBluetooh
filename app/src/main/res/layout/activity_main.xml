@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="vivacity.com.br.livrariacultura_clientebluetooh.MainActivity">
+
+
+    <TextView
+        android:id="@+id/resultTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="64dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="clickedView"
+        android:textColor="#000"
+        android:textSize="27sp"
+        android:textStyle="normal"/>
+
+    <ImageView
+        android:id="@+id/imageViewMic"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+       android:layout_centerInParent="true"
+        android:onClick="startListening"
+        android:src="@drawable/ic_microphone" />
+
+    <ImageView
+        android:id="@+id/imageViewSend"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="64dp"
+        android:onClick="clickedView"
+        android:src="@drawable/ic_send_message" />
+
+</RelativeLayout>

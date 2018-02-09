@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Livraria Cultura - Cliente Bluetooh</string>
+    <string name="uuid">5419a893-467c-4812-8cdb-282f5853168f</string>
+    <string-array name="devices_name">
+        <item></item>
+    </string-array>
+</resources>
