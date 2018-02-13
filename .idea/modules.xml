@@ -3,9 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/LivrariaCulturaClienteBluetooh.iml" filepath="$PROJECT_DIR$/LivrariaCulturaClienteBluetooh.iml" />
-      <module fileurl="file://E:\Gabriel\AndroidStudioProjects\LivrariaCulturaClienteBluetooh\LivrariaCulturaClienteBluetooh.iml" filepath="E:\Gabriel\AndroidStudioProjects\LivrariaCulturaClienteBluetooh\LivrariaCulturaClienteBluetooh.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://E:\Gabriel\AndroidStudioProjects\LivrariaCulturaClienteBluetooh\app\app.iml" filepath="E:\Gabriel\AndroidStudioProjects\LivrariaCulturaClienteBluetooh\app\app.iml" />
     </modules>
   </component>
 </project>
