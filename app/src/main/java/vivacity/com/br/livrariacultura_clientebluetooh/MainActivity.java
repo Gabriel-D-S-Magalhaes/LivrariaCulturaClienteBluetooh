@@ -5,6 +5,7 @@ import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.CountDownTimer;
@@ -18,9 +19,12 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity implements ListPairedDevicesDialogFragment.ListPairedDevicesListener {
 
@@ -33,7 +37,12 @@ public class MainActivity extends AppCompatActivity implements ListPairedDevices
 
     // Bluetooth
     private BluetoothAdapter bluetoothAdapter;
-    private BluetoothDevice sanbot;
+
+    private BluetoothDevice selectedDevice;
+
+    private ArrayList<BluetoothDevice> deviceArrayList = new ArrayList<>();// All devices paired
+
+    private ConnectThread connectThread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,16 +113,45 @@ public class MainActivity extends AppCompatActivity implements ListPairedDevices
 
     private void sendText() {
 
+        // Se a TextView não tiver nenhum texto para ser enviado, então
         if (TextUtils.isEmpty(resultTextView.getText())) {
 
+            // Adverte o usuário com um Toast
             Toast.makeText(getApplicationContext(), "Sem mensagem", Toast.LENGTH_SHORT).show();
 
         } else if (bluetoothAdapter.isEnabled()) {
 
-            showListPairedDevices();
+            if (selectedDevice != null) {
+
+                // Isso deve sempre ser feito antes da conexão. É seguro fazer a chamada sem
+                // realmente verificar se está executando ou não (mas, se você quiser verificar,
+                // chame isDiscovering()).
+                bluetoothAdapter.cancelDiscovery();// Não há a necessidade de descobrir novos devices
+
+                // Se NÃO há uma instância de ConnectThread, então
+                if (connectThread == null) {
+
+                    // Instanciar a classe ConnectThread passando o dispositivo escolhido pelo user
+                    // como parâmetro.
+                    connectThread = new ConnectThread(this.selectedDevice);
+
+                    // Desencadear o método run (Override da classe Thread) da classe ConnectThread
+                    connectThread.run();
+                }
+
+                // Enviar para o dispositivo atuante como server
+                connectThread.write(resultTextView.getText().toString().getBytes());
+
+            } else {
+
+                // Usuário deve escolher um dispositivo (da lista de dispositivos pareados), que
+                // atuará como um Bluetooth Server
+                showListPairedDevices();
+            }
 
         } else {
 
+            // Solicita ao usuário que habilite o bluetooth
             enableBluetooth();
         }
     }
@@ -138,8 +176,10 @@ public class MainActivity extends AppCompatActivity implements ListPairedDevices
      */
     @Override
     public void clickedItem(int index) {
-        Toast.makeText(getApplicationContext(), "Index do item selecionado = " + index,
-                Toast.LENGTH_SHORT).show();
+
+        this.selectedDevice = this.deviceArrayList.get(index);
+        Toast.makeText(getApplicationContext(), "Dispositivo escolhido", Toast.LENGTH_SHORT)
+                .show();
     }
 
     public void clickedView(View view) {
@@ -249,6 +289,7 @@ public class MainActivity extends AppCompatActivity implements ListPairedDevices
                         + "\nType: " + device.getType()
                         + "\nDescribe contents: " + device.describeContents());
 
+                this.deviceArrayList.add(device);
                 devicesNames[i] = device.getName();
                 i++;
             }
@@ -289,5 +330,12 @@ public class MainActivity extends AppCompatActivity implements ListPairedDevices
 
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i(TAG, "onDestroy triggered");
+        connectThread.cancel();
     }
 }
